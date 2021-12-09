@@ -1,0 +1,45 @@
+{% extends '_base.html' %}
+
+{% load static %}
+
+{% block title %}
+Shiftbid Homepage
+{% endblock title %}
+
+{% block content %}
+<h2 class="text-center"><u>Shiftbid</u></h2>
+<div class="container">
+    <a href="{% url 'shiftbid_create' %}" class="btn btn-success">Create</a>
+</div>
+<hr>
+
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Shiftbid Name</th>
+                <th scope="col">Date & Time Created</th>
+                <th scope="col">View</th>
+                <th scope="col">Start</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for shiftbid in object_list %}
+            <tr>
+                <th scope="row">{{shiftbid.report_name}}</th>
+                <td>{{shiftbid.datetime_created}}</td>
+                <td><a href="{% url 'shiftbid_list' shiftbid.pk %}" class="btn btn-secondary">View</a></td>
+                <td>
+                    <form action="{% url 'shiftbid_start' shiftbid.pk %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">Start</button>
+                    </form>
+                </td>
+                <td><a href="{% url 'shiftbid_delete' shiftbid.pk %}" class="btn btn-danger">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

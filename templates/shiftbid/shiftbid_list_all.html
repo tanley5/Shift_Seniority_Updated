@@ -1,0 +1,65 @@
+{% extends '_base.html' %}
+
+{% load static %}
+
+{% block title %}
+Shiftbid List
+{% endblock title %}
+
+{% block content %}
+<h2 class="text-center"><u>Seniority</u></h2>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Report</th>
+                <th scope="col">Agent Net ID</th>
+                <th scope="col">Agent Email</th>
+                <th scope="col">Agent Seniority Number</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for seniority in seniority_object %}
+            <tr>
+                <th scope="row">{{seniority.report}}</th>
+                <td>{{seniority.agent_net_id}}</td>
+                <td>{{seniority.agent_email}}</td>
+                <td>{{seniority.seniority_number}}</td>
+                <td><a href="{% url 'seniority_update' seniority.pk %}" class="btn btn-secondary">Edit</a></td>
+                <td><a href="{% url 'seniority_delete' seniority.pk %}" class="btn btn-danger">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<hr>
+<h2 class="text-center"><u>Shift</u></h2>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Report</th>
+                <th scope="col">Shift</th>
+                <th scope="col">Agent Email</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for shift in shift_object %}
+            <tr>
+                <th scope="row">{{shift.report}}</th>
+                <td>{{shift.shift}}</td>
+                <td>{{shift.agent_email}}</td>
+                <td><a href="{% url 'shift_update' shift.pk %}" class="btn btn-secondary">Edit</a></td>
+                <td><a href="{% url 'shift_delete' shift.pk %}" class="btn btn-danger">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock content %}

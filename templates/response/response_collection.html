@@ -1,0 +1,19 @@
+{% extends '_base.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+Shiftbid Response Page
+{% endblock title %}
+
+{% block content %}
+<h2 class="text-center"><u>Shiftbid Response Submission</u></h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <hr>
+    <input type="submit" value="Submit">
+</form>
+{% endblock content %}

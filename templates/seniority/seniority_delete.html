@@ -1,0 +1,16 @@
+{% extends '_base.html' %}
+
+{% load static %}
+
+{% block title %}
+Seniority Delete Page
+{% endblock title %}
+
+{% block content %}
+<h2 class="text-center"><u>Seniority Delete Page</u></h2>
+<form action="" method="post">
+    {% csrf_token %}
+    <p>Are you sure you want to delete "{{object}}"?</p>
+    <input type="submit" class='btn btn-danger' value="Delete">
+</form>
+{% endblock content %}
