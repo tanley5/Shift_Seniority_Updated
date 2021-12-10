@@ -51,7 +51,12 @@ class Report():
         self.empty_shift = Shift.objects.filter(report=shiftbid).exclude(agent_email__contains='@')
 
     def set_current_seniority(self):
-        self.current_seniority = self.all_seniority.get(seniority_number=len(self.filled_shift)+1)
+        try:
+            self.current_seniority = self.all_seniority.get(seniority_number=len(self.filled_shift)+1)
+        except Exception as e:
+            print("Seniority Number Not there")
+            self.current_seniority = 0
+
         # self.current_seniority = len(self.filled_shift)+1
 #----------------End Setter-----------------
 #----------------Getter---------------------
@@ -117,7 +122,11 @@ class Report():
         self.email_message_link = f"http://localhost:8000/response/response_collection/{self.get_report_name()}"
 
     def send_email(self):
-        agent_email = self.current_seniority.agent_email
+        try:
+            agent_email = self.current_seniority.agent_email
+        except Exception as e:
+            print("Send Email trying to send 0")
+            agent_email = "test@admin.com"
         message = f"Please Click On The Link To Select Your Shift. {self.get_current_email_link()}."
         print(agent_email)
         print(message)
