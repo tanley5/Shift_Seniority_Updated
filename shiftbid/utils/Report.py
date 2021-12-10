@@ -10,7 +10,7 @@ from shift.models import Shift
 class Report():
     def __init__(self, pk):
         
-        self.first_sent = False
+        self.first_sent = True
         self.sent_to_admin = False
         
         self.set_shiftbid(pk)
@@ -44,11 +44,11 @@ class Report():
     
     def set_filled_shift(self):
         shiftbid = Shiftbid.objects.get(report_name=self.get_report_name())
-        self.filled_shift = Shift.objects.filter(report=shiftbid).exclude(agent_email__isnull=False)
+        self.filled_shift = Shift.objects.filter(report=shiftbid).filter(agent_email__contains='@')
 
     def set_empty_shift(self):
         shiftbid = Shiftbid.objects.get(report_name=self.get_report_name())
-        self.empty_shift = Shift.objects.filter(report=shiftbid).exclude(agent_email__isnull=True)
+        self.empty_shift = Shift.objects.filter(report=shiftbid).exclude(agent_email__contains='@')
 
     def set_current_seniority(self):
         self.current_seniority = self.all_seniority.get(seniority_number=len(self.filled_shift)+1)
@@ -104,6 +104,9 @@ class Report():
         self.set_current_epoch()
 
     def check_fields_updated(self):
+        self.update_fields()
+        print(f"Current Epoch: {self.get_current_epoch()}")
+        print(f"Filled Shift: {len(self.get_filled_shift())}")
         if self.current_epoch == len(self.filled_shift):
             return False
         else:
@@ -111,16 +114,20 @@ class Report():
 
     # Modify this method to fit the view link
     def create_email_message_link(self):
-        self.email_message_link = f"https://localhost/8000/shiftbid_response/{self.get_report_name()}"
+        self.email_message_link = f"http://localhost:8000/response/response_collection/{self.get_report_name()}"
 
     def send_email(self):
-        agent_email = self.current_seniority().agent_email
-        message = f"Please Click On The Link To Select Your Shift. {self.get_current_email_list()}."
+        agent_email = self.current_seniority.agent_email
+        message = f"Please Click On The Link To Select Your Shift. {self.get_current_email_link()}."
+        print(agent_email)
+        print(message)
         # send email
     
     def send_to_admin(self):
         email_address = "tanley.bench@usanainc.com"
         message = f"All fields for {self.report_name} are filled"
+        print(email_address)
+        print(message)
         # send email
 
     def create_report(self):
@@ -135,11 +142,13 @@ class Report():
             # else check for updates
             else:
                 if self.check_fields_updated():
+                    print("subsequent sent")
                     self.send_email()
                     self.update_epoch()
                     time.sleep(20)
             # if the rows are updated, updated epoch and go forward to next seniority
                 else:
+                    print("sleep called")
                     time.sleep(20)
         #send email to admin
         self.send_to_admin()

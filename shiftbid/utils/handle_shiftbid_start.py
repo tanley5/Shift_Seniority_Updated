@@ -18,7 +18,7 @@ def test_running():
 
 def handleShiftbidStart(pk):
     report = Report(pk)
-    # report.create_report()
+    report.create_report()
     #test_running()
 
 #_____________________________________________________________________________________
