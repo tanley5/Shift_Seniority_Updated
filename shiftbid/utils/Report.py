@@ -140,7 +140,7 @@ class Report():
         # send email
 
     def create_report(self):
-        while len(self.get_filled_shift()) != len(self.get_all_seniority()):
+        while len(self.get_filled_shift()) < len(self.get_all_seniority()):
             # update all fields
             self.update_fields()
             # if the current epoch == 0, send first epoch email and update epoch
@@ -161,20 +161,3 @@ class Report():
                     time.sleep(20)
         #send email to admin
         self.send_to_admin()
-
-    #     if self.first_sent:
-    #         while(self.current_epoch < self.last_epoch):
-    #             if self.check_fields_updated():
-    #                 self.update_fields()
-    #                 # send email
-    #                 self.update_epoch()
-    #             else:
-    #                 break
-
-    #         if self.current_epoch == self.last_epoch:
-    #             # Send email to me
-    #             self.sent_to_admin = not self.sent_to_admin
-    #     else:
-    #         # send first email
-    #         self.first_sent = not self.first_sent
-
