@@ -5,6 +5,7 @@ from django.http.response import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.shortcuts import render
 import threading
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Shiftbid
 from .forms import ShiftbidCreateForm
@@ -16,7 +17,9 @@ from responses.utilities.custom_url_views import create_custom_views_url
 from .utils.handle_shiftbid_start import handleShiftbidStart
 
 
-class ShiftbidListView(ListView):
+class ShiftbidListView(LoginRequiredMixin, ListView):
+    login_url = '/accounts/login/'
+    redirect_field_name = 'redirect_to'
     model = Shiftbid
     template_name = 'shiftbid/shiftbid_index.html'
 

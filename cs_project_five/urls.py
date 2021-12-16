@@ -9,4 +9,5 @@ urlpatterns = [
     path('seniority/', include('seniority.urls')),
     path('shift/', include('shift.urls')),
     path('response/', include('responses.urls')),
+    path('',include('pages.urls')),
 ]

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'seniority.apps.SeniorityConfig',
     'shift.apps.ShiftConfig',
     'responses.apps.ResponsesConfig',
+    'pages.apps.PagesConfig',
 ]
 
 MIDDLEWARE = [
