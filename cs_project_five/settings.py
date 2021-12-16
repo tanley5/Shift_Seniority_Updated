@@ -141,3 +141,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Django Crispy Forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# Django authentications
+# Redirect to home URL after login (Default redirects to /accounts/profile/)
+LOGIN_REDIRECT_URL = '/'
+
+# Django email to console for testing. Change with email host information
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

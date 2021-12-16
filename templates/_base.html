@@ -41,6 +41,12 @@
                             <li><a class="dropdown-item" href="#">Something else here</a></li>
                         </ul>
                     </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-link text-success">User: {{ user.get_username }}</li>
+                    <li><a class="nav-link text-primary" href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
+                    {% else %}
+                    <li><a class="nav-link text-primary" href="{% url 'login'%}?next={{request.path}}">Login</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
